@@ -49,10 +49,10 @@ resource "google_cloudfunctions_function" "label" {
 
 // https://www.terraform.io/docs/providers/google/r/cloudfunctions_cloud_function_iam.html
 
-resource "google_cloudfunctions_function_iam_member" "member" {
-  project        = google_cloudfunctions_function.label.project
-  region         = google_cloudfunctions_function.label.region
-  cloud_function = google_cloudfunctions_function.label.name
-  role           = "roles/compute.instanceAdmin.v1"
-  member         = "allUsers"
-}
+# resource "google_cloudfunctions_function_iam_member" "member" {
+#   project        = google_cloudfunctions_function.label.project
+#   region         = google_cloudfunctions_function.label.region
+#   cloud_function = google_cloudfunctions_function.label.name
+#   role           = "roles/compute.instanceAdmin.v1"
+#   member         = "allUsers"
+# }
