@@ -48,11 +48,17 @@ resource "google_cloudfunctions_function" "label" {
 }
 
 // https://www.terraform.io/docs/providers/google/r/cloudfunctions_cloud_function_iam.html
+// https://cloud.google.com/compute/docs/access/iam#compute.admin
+
+// Runtime service account (aka App Engine default service account) is employed
+// by default should be enough
+// https://cloud.google.com/functions/docs/securing/function-identity#runtime_service_account
+// So no need for binding below, unless attempting to attain least privilege
 
 # resource "google_cloudfunctions_function_iam_member" "member" {
 #   project        = google_cloudfunctions_function.label.project
 #   region         = google_cloudfunctions_function.label.region
 #   cloud_function = google_cloudfunctions_function.label.name
-#   role           = "roles/compute.instanceAdmin.v1"
-#   member         = "allUsers"
+#   role           = "roles/compute.admin"
+#   member         = "serviceAccount:328198564608-compute@developer.gserviceaccount.com"
 # }

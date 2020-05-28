@@ -52,22 +52,29 @@ type instanceEventTemplate struct {
 }
 
 // Label consumes a Pub/Sub message.
-func Label(ctx context.Context, m pubSubMessage) error {
-	var instanceEvent instanceEventTemplate
-	err := json.Unmarshal(m.Data, &instanceEvent)
+func Label(ctx context.Context, m pubSubMessage) (err error) {
+
+	credentials, err := google.FindDefaultCredentials(ctx)
 	if err != nil {
-		return err
+		return
+	}
+	log.Println("Project ID", credentials.ProjectID)
+
+	var instanceEvent instanceEventTemplate
+	err = json.Unmarshal(m.Data, &instanceEvent)
+	if err != nil {
+		return
 	}
 	log.Println(instanceEvent)
 
 	c, err := google.DefaultClient(ctx, compute.CloudPlatformScope)
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
 	computeService, err := compute.New(c)
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
 	s := strings.Split(instanceEvent.ProtoPayload.ResourceName, "/")
@@ -80,7 +87,7 @@ func Label(ctx context.Context, m pubSubMessage) error {
 
 	inst, err := computeService.Instances.Get(project, zone, instance).Do()
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
 	existingLabels := inst.Labels
@@ -101,8 +108,8 @@ func Label(ctx context.Context, m pubSubMessage) error {
 	// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setLabels
 	_, err = computeService.Instances.SetLabels(project, zone, instance, rb).Context(ctx).Do()
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
-	return nil
+	return
 }

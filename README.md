@@ -1,6 +1,9 @@
-Idea is to label the instances so they they can be viewed inside a billing
-export. From there you can better identify costly instances.
+Need: Difficult to identity which instances are having the biggest impact on
+your GCP bill
 
-# Enable GCP Billing export
+Feature: Function to label compute instances by instance {name,id} so they can
+be viewed inside a [billing
+export](https://cloud.google.com/blog/products/gcp/use-labels-to-gain-visibility-into-gcp-resource-usage-and-spending)
+or primitively from the group spending by labels in the Billing > Reports page.
 
-<img src="https://s.natalian.org/2020-05-25/billing-export.png">
+Benefit: Now you can better identify costly instances.

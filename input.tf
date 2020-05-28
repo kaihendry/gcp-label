@@ -1,9 +1,9 @@
 variable project_name {
-  default = "jsonunroller"
+  default = "superown-182508"
 }
 
 variable "bucket" {
-  default     = "artifacts.jsonunroller.appspot.com"
+  default     = "superown-function"
   description = "The bucket where the function source is kept"
 }
 
