@@ -51,7 +51,7 @@ type instanceEventTemplate struct {
 	Timestamp time.Time `json:"timestamp"`
 }
 
-// Label consumes a Pub/Sub message.
+// Label is the entry point that consumes a Pub/Sub message.
 func Label(ctx context.Context, m pubSubMessage) (err error) {
 
 	credentials, err := google.FindDefaultCredentials(ctx)
